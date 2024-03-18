@@ -70,6 +70,15 @@ int main(int argc, char **argv) {
 
   // For each line in the file, interpret it.
   // NOTE: Use get_line() function in process_file.h
+  int i=0;
+  while(1){
+    get_line(buffer, i); 
+    //check to see if there is something in the buffer, first character 
+    //if there is nothing \0, break loop
+
+    interpret(buffer);
+    i++;
+  }
 
   /* --- Your code ends here. --- */
 
