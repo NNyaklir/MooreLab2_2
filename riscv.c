@@ -42,9 +42,69 @@ int interpret(char *instr) {
   // TODO:
   char **tokens= tokenize(instr, " ,"); //tokenizes the instruction
   char *first = tokens[0]; //gets the initial inistruction
-  int x= 1;
+    //first set of instructions load byte and load word
     if(strcmp(*first,"LB")){
-      r[x]=5600;
+      
+    }
+    if(strcmp(*first,"LW")){
+      
+    }
+    //second set of instructions store byte and store word
+    if(strcmp(*first,"SB")){
+      
+    }
+    if(strcmp(*first,"SW")){
+      
+    }
+    //third set of insctructions add, add immediate, and sub
+    if(strcmp(*first,"ADD")){
+      
+    }
+    if(strcmp(*first,"ADDI")){
+      
+    }
+    if(strcmp(*first,"SUB")){
+      
+    }
+    // fourth set of instructions exclusive or, exclusive or immediate, shift left immediate, and shift right immediate
+    if(strcmp(*first,"XOR")){
+      
+    }
+    if(strcmp(*first,"XORI")){
+      
+    }
+    if(strcmp(*first,"SLLI")){
+      
+    }
+    if(strcmp(*first,"SRLI")){
+      
+    }
+    //fifth set of instructions  move immediate, load immediate, negate, ones compliment
+    if(strcmp(*first,"MV")){
+      
+    }
+    if(strcmp(*first,"LI")){
+      
+    }
+    if(strcmp(*first,"NED")){
+      
+    }
+    if(strcmp(*first,"NOT")){
+      
+    }
+    //sixth set of instructions jump and link, and jump
+    if(strcmp(*first,"LB")){
+      
+    }
+    if(strcmp(*first,"LB")){
+      
+    }
+    //seventh set of instructions,jump offset, and register
+    if(strcmp(*first,"LB")){
+      
+    }
+    if(strcmp(*first,"LB")){
+      
     }
 
   return 1;
