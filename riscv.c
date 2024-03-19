@@ -40,6 +40,12 @@ void init_memory_elements(void) {
  */
 int interpret(char *instr) {
   // TODO:
+  char **tokens= tokenize(instr, " ,"); //tokenizes the instruction
+  char *first = tokens[0]; //gets the initial inistruction
+  int x= 1;
+    if(strcmp(*first,"LB")){
+      r[x]=5600;
+    }
 
   return 1;
 }
