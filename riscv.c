@@ -61,12 +61,31 @@ int interpret(char *instr) {
     }
     //third set of insctructions add, add immediate, and sub
     if(strcmp(*first,"ADD")){
+      int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+      int RS2 = findRegister(tokens[3]);
+
+      r[RD]=r[RS1]+r[RS2];
+      return 1;
       
     }
     if(strcmp(*first,"ADDI")){
-      
+      int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+  
+      int imm;
+      sscanf(tokens[3],"%d",imm);
+      r[RD]=r[RS1]+imm;
+      return 1;
     }
     if(strcmp(*first,"SUB")){
+      int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+      int RS2 = findRegister(tokens[3]);
+
+      r[RD]=r[RS1]-r[RS2];
+      return 1;
+      
       
     }
     // fourth set of instructions exclusive or, exclusive or immediate, shift left immediate, and shift right immediate
