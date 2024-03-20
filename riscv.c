@@ -37,6 +37,25 @@ int findRegister(char *section){
   //@maria this is for your method
 }
 
+//this is to check if an imm is by itself or from a register.
+int checkPar(char *parcheck){
+  for (int i=0;i<str_len(parcheck)-1;i++){
+    if(strcmp(i,"(")){
+      return 1;
+    }
+  }
+  return 0;
+}
+
+int ADDI(char **tokens){
+  int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+      
+      int imm;
+      sscanf(tokens[3],"%d",imm);
+      r[RD]=mem[r[RS1]+imm];
+      return 1;
+}
 /**
  * Fill out this function and use it to read interpret user input to execute
  * RV32 instructions. You may expect that a single, properly formatted RISC-V
@@ -88,13 +107,7 @@ int interpret(char *instr) {
       
     }
     if(strcmp(*first,"ADDI")){
-      int RD = findRegister(tokens[1]);
-      int RS1 = findRegister(tokens[2]);
-  
-      int imm;
-      sscanf(tokens[3],"%d",imm);
-      r[RD]=mem[r[RS1]+imm];
-      return 1;
+      return ADDI(tokens);
     }
     if(strcmp(*first,"SUB")){
       int RD = findRegister(tokens[1]);
