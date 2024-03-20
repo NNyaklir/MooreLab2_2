@@ -32,6 +32,7 @@ void init_memory_elements(void) {
   // Set sp to be the top part of the memory
   r[2] = (uintptr_t)&mem[MEM_SIZE];
 }
+
 int findRegister(char *section){
   //@maria this is for your method
 }
@@ -45,6 +46,8 @@ int interpret(char *instr) {
   // TODO:
   char **tokens= tokenize(instr, " ,"); //tokenizes the instruction
   char *first = tokens[0]; //gets the initial inistruction
+
+
     //first set of instructions load byte and load word
     if(strcmp(*first,"LB")){
       char **LBtok = tokenize(tokens[2],"()");
@@ -53,9 +56,8 @@ int interpret(char *instr) {
       sscanf(LBtok[2],"%d",IMM);
       int RS1 = LBtok[2];
 
-      r[RD] = r[RS1] + IMM;
-
-      
+      r[RD] = mem[r[RS1] + IMM];
+      return 1;
     }
     if(strcmp(*first,"LW")){
       char **LWtok = tokenize(tokens[2],"()");
@@ -64,11 +66,12 @@ int interpret(char *instr) {
       sscanf(LWtok[2],"%d",IMM);
       int RS1 = LWtok[2];
 
-      r[RD] = r[RS1] + IMM;
-      
+      r[RD] = mem[r[RS1] + IMM];
+      return 1;
     }
     //second set of instructions store byte and store word
     if(strcmp(*first,"SB")){
+
       
     }
     if(strcmp(*first,"SW")){
@@ -90,7 +93,7 @@ int interpret(char *instr) {
   
       int imm;
       sscanf(tokens[3],"%d",imm);
-      r[RD]=r[RS1]+imm;
+      r[RD]=mem[r[RS1]+imm];
       return 1;
     }
     if(strcmp(*first,"SUB")){
