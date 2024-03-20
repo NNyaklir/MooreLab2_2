@@ -49,12 +49,25 @@ int checkPar(char *parcheck){
 
 int ADDI(char **tokens){
   int RD = findRegister(tokens[1]);
-      int RS1 = findRegister(tokens[2]);
-      
-      int imm;
-      sscanf(tokens[3],"%d",imm);
-      r[RD]=mem[r[RS1]+imm];
-      return 1;
+  if (checkPar(tokens[2])){
+  char **ADtok = tokenize(tokens[2],"()");
+  int imm;
+  int RS1 = findRegister(ADtok[0]);
+
+  sscanf(ADtok[1],"%d",imm);
+  r[RD]=mem[r[RS1]+imm];
+  return 1;
+  }
+  else{
+    int RS1 = findRegister(tokens[2]);
+
+    int imm;
+    sscanf(tokens[3],"%d",imm);
+    r[RD]=mem[r[RS1]+imm];
+    return 1;
+
+  }
+  
 }
 /**
  * Fill out this function and use it to read interpret user input to execute
@@ -69,24 +82,46 @@ int interpret(char *instr) {
 
     //first set of instructions load byte and load word
     if(strcmp(*first,"LB")){
-      char **LBtok = tokenize(tokens[2],"()");
-      int RD = findRegister(tokens[1]);
-      int IMM; 
-      sscanf(LBtok[2],"%d",IMM);
-      int RS1 = LBtok[2];
+      if (checkPar(tokens[2])){
+        char **LBtok = tokenize(tokens[2],"()");
+        int RD = findRegister(tokens[1]);
+        int IMM; 
+        sscanf(LBtok[1],"%d",IMM);
+        int RS1 = findRegister(LBtok[0]);
 
-      r[RD] = mem[r[RS1] + IMM];
-      return 1;
+        r[RD] = mem[r[RS1] + IMM];
+        return 1;
+      }
+      else{
+        int RD= findRegister(tokens[1]);
+        int RS1= findRegister(tokens[2]);
+        int IMM;
+        sscanf(tokens[3],"%d",IMM);
+
+        r[RD] = mem[r[RS1] + IMM];
+        return 1;
+      }
     }
     if(strcmp(*first,"LW")){
-      char **LWtok = tokenize(tokens[2],"()");
-      int RD = findRegister(tokens[1]);
-      int IMM; 
-      sscanf(LWtok[2],"%d",IMM);
-      int RS1 = LWtok[2];
+      if (checkPar(tokens[2])){
+        char **LWtok = tokenize(tokens[2],"()");
+        int RD = findRegister(tokens[1]);
+        int IMM; 
+        sscanf(LWtok[0],"%d",IMM);
+        int RS1 = findRegister(LWtok[1]);
 
-      r[RD] = mem[r[RS1] + IMM];
-      return 1;
+        r[RD] = mem[r[RS1] + IMM];
+        return 1;
+      }
+      else{
+        int RD= findRegister(tokens[1]);
+        int RS1= findRegister(tokens[2]);
+        int IMM;
+        sscanf(tokens[3],"%d",IMM);
+
+        r[RD] = mem[r[RS1] + IMM];
+        return 1;
+      }
     }
     //second set of instructions store byte and store word
     if(strcmp(*first,"SB")){
