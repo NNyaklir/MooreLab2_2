@@ -71,7 +71,7 @@ int interpret(char *instr) {
     }
     //second set of instructions store byte and store word
     if(strcmp(*first,"SB")){
-
+      
       
     }
     if(strcmp(*first,"SW")){
@@ -107,15 +107,48 @@ int interpret(char *instr) {
     }
     // fourth set of instructions exclusive or, exclusive or immediate, shift left immediate, and shift right immediate
     if(strcmp(*first,"XOR")){
+      int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+      int RS2 = findRegister(tokens[3]);
+
+      r[RD] = r[RS1]^r[RS2];
+      return 1;
       
     }
     if(strcmp(*first,"XORI")){
+      int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+      
+      int imm;
+      sscanf(tokens[3],"%d",imm);
+
+      r[RD] = mem[r[RS1]+imm];
+      //r[RD]=r[RS1]+imm;
+      return 1;
       
     }
     if(strcmp(*first,"SLLI")){
+      int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+      
+      int imm;
+      sscanf(tokens[3],"%d",imm);
+
+      r[RD] = mem[r[RS1]<<imm];
+      //r[RD] = r[RS1]<<imm;
+      return 1;
       
     }
     if(strcmp(*first,"SRLI")){
+      int RD = findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+      
+      int imm;
+      sscanf(tokens[3],"%d",imm);
+
+      r[RD] = mem[r[RS1]>>imm];
+      //r[RD] = r[RS1]>>imm;
+      return 1;
       
     }
     //fifth set of instructions  move immediate, load immediate, negate, ones compliment
