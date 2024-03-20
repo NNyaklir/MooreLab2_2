@@ -47,9 +47,24 @@ int interpret(char *instr) {
   char *first = tokens[0]; //gets the initial inistruction
     //first set of instructions load byte and load word
     if(strcmp(*first,"LB")){
+      char **LBtok = tokenize(tokens[2],"()");
+      int RD = findRegister(tokens[1]);
+      int IMM; 
+      sscanf(LBtok[2],"%d",IMM);
+      int RS1 = LBtok[2];
+
+      r[RD] = r[RS1] + IMM;
+
       
     }
     if(strcmp(*first,"LW")){
+      char **LWtok = tokenize(tokens[2],"()");
+      int RD = findRegister(tokens[1]);
+      int IMM; 
+      sscanf(LWtok[2],"%d",IMM);
+      int RS1 = LWtok[2];
+
+      r[RD] = r[RS1] + IMM;
       
     }
     //second set of instructions store byte and store word
@@ -85,7 +100,6 @@ int interpret(char *instr) {
 
       r[RD]=r[RS1]-r[RS2];
       return 1;
-      
       
     }
     // fourth set of instructions exclusive or, exclusive or immediate, shift left immediate, and shift right immediate
@@ -163,7 +177,7 @@ int main(int argc, char **argv) {
     get_line(buffer, i); 
     //check to see if there is something in the buffer, first character 
     //if there is nothing \0, break loop
-    if (strcmp(buffer[0],'\0')){
+    if (strcmp(buffer[0],"\0")){
       break;
     }
 
