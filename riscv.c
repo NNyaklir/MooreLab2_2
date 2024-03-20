@@ -32,6 +32,9 @@ void init_memory_elements(void) {
   // Set sp to be the top part of the memory
   r[2] = (uintptr_t)&mem[MEM_SIZE];
 }
+int findRegister(char *section){
+  //@maria this is for your method
+}
 
 /**
  * Fill out this function and use it to read interpret user input to execute
