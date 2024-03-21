@@ -125,10 +125,47 @@ int interpret(char *instr) {
     }
     //second set of instructions store byte and store word
     if(strcmp(*first,"SB")){
+      if (checkPar(tokens[2])){
+        char **SBtok = tokenize(tokens[2],"()");
+        int RD = findRegister(tokens[1]);
+        int IMM; 
+        sscanf(SBtok[0],"%d",IMM);
+        int RS1 = findRegister(SBtok[1]);
+
+        
+        mem[r[RD]+IMM]=r[RS1];
+        return 1;
+      }
+      else{
+        int RD= findRegister(tokens[1]);
+        int RS1= findRegister(tokens[2]);
+        int IMM;
+        sscanf(tokens[3],"%d",IMM);
+
+        mem[r[RD]+IMM]=r[RS1];
+        return 1;
       
       
     }
     if(strcmp(*first,"SW")){
+      if (checkPar(tokens[2])){
+        char **SWtok = tokenize(tokens[2],"()");
+        int RD = findRegister(tokens[1]);
+        int IMM; 
+        sscanf(SWtok[0],"%d",IMM);
+        int RS1 = findRegister(SWtok[1]);
+
+        mem[r[RD]+IMM]=r[RS1];
+        return 1;
+      }
+      else{
+        int RD= findRegister(tokens[1]);
+        int RS1= findRegister(tokens[2]);
+        int IMM;
+        sscanf(tokens[3],"%d",IMM);
+
+        mem[r[RD]+IMM]=r[RS1];
+        return 1;
       
     }
     //third set of insctructions add, add immediate, and sub
