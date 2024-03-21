@@ -302,7 +302,7 @@ int interpret(char *instr) {
 
       int imm;
       sscanf(tokens[2],"%d",imm);
-      r[RD]= imm;
+      r[RD]= mem[r[0]+imm];
       return 1;
       
     }
