@@ -246,9 +246,17 @@ int interpret(char *instr) {
     }
     //fifth set of instructions  move immediate, load immediate, negate, ones compliment
     if(strcmp(*first,"MV")){
-      
+      char **additoks = malloc(sizeof(tokens)*4);
+      additoks[1]=tokens[1];
+      additoks[2]; //???? idk
+      additoks[3];
     }
     if(strcmp(*first,"LI")){
+      char **additoks = malloc(sizeof(tokens)*4);
+      additoks[1]=tokens[1];
+      additoks[2]=r[0];
+      additoks[3]=tokens[2];
+      return ADDI(additoks);
       
     }
     if(strcmp(*first,"NED")){
