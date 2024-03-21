@@ -47,6 +47,8 @@ void init_memory_elements(void) {
 }
 
 int findRegister(char *section){
+  if (strcmp(section,"0")) return 0;
+  if (strcmp(section,"ZERO")) return 0;
   if (strcmp(section,"RA")) return 1;
   if (strcmp(section,"SP")) return 2;
   if (strcmp(section,"GP")) return 3;
@@ -305,6 +307,11 @@ int interpret(char *instr) {
       
     }
     if(strcmp(*first,"NED")){
+      char **subitoks = malloc(sizeof(tokens)*4);
+      subitoks[1]= tokens[1];
+      subitoks[2]= r[0];
+      subitoks[3]= tokens[2];
+      return SUB(subitoks);
       
     }
     if(strcmp(*first,"NOT")){
