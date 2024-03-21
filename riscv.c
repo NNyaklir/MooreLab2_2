@@ -15,6 +15,19 @@ uintptr_t r[N_REGISTERS];
 uintptr_t pc;
 unsigned char mem[MEM_SIZE];
 
+static int print_registers(char *fd_name){
+  FILE *fptr;
+
+  if((fptr= fopen(fd_name,"w"))==NULL) return 1;
+  
+  //print all registers
+  fprintf(fptr, "Registers:\n");
+  for (size_t i=0; i<N_REGISTERS;i++){
+    fprintf(fptr, "X[%zu] = %u\n", i, r[i]);
+  }
+  return 0;
+}
+
 static void error_no_memory(void) {
   fprintf(stderr, "No more memory available. Error: %s\n", strerror(errno));
 }
@@ -319,8 +332,9 @@ int main(int argc, char **argv) {
   FILE *file;
   char *buffer;
 
-  if (argc != 2) {
-    fprintf(stderr, "Only two parameters must be passed.\n");
+  if (argc != 3) {
+    fprintf(stderr, "Only three parameters must be passed where argv[1]=file name and"
+    "with the assembly instructions and argv[2]=filename to same the registers status\n");
     return 1;
   }
 
@@ -359,5 +373,6 @@ int main(int argc, char **argv) {
   close_file();
   free(buffer);
 
-  return 0;
+  return print_registers(argv[2]);
 }
+
