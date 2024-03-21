@@ -34,7 +34,39 @@ void init_memory_elements(void) {
 }
 
 int findRegister(char *section){
-  //@maria this is for your method
+  if (strcmp(section,"RA")) return 1;
+  if (strcmp(section,"SP")) return 2;
+  if (strcmp(section,"GP")) return 3;
+  if (strcmp(section,"TP")) return 4;
+  if (strcmp(section,"T0")) return 5;
+  if (strcmp(section,"T1")) return 6;
+  if (strcmp(section,"T2")) return 7;
+  if (strcmp(section,"S0")) return 8;
+  if (strcmp(section,"FP")) return 8;
+  if (strcmp(section,"S1")) return 9;
+  if (strcmp(section,"A0")) return 10;
+  if (strcmp(section,"A1")) return 11;
+  if (strcmp(section,"A2")) return 12;
+  if (strcmp(section,"A3")) return 13;
+  if (strcmp(section,"A4")) return 14;
+  if (strcmp(section,"A5")) return 15;
+  if (strcmp(section,"A6")) return 16;
+  if (strcmp(section,"A7")) return 17;
+  if (strcmp(section,"S2")) return 18;
+  if (strcmp(section,"S3")) return 19;
+  if (strcmp(section,"S4")) return 20;
+  if (strcmp(section,"S5")) return 21;
+  if (strcmp(section,"S6")) return 22;
+  if (strcmp(section,"S7")) return 23;
+  if (strcmp(section,"S8")) return 24;
+  if (strcmp(section,"S9")) return 25;
+  if (strcmp(section,"S10")) return 26;
+  if (strcmp(section,"S11")) return 27;
+  if (strcmp(section,"T3")) return 28;
+  if (strcmp(section,"T4")) return 29;
+  if (strcmp(section,"T5")) return 30;
+  if (strcmp(section,"T6")) return 31;
+  else {return -1;}
 }
 
 //this is to check if an imm is by itself or from a register.
