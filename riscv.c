@@ -95,13 +95,13 @@ int checkPar(char *parcheck){
 int ADDI(char **tokens){
   int RD = findRegister(tokens[1]);
   if (checkPar(tokens[2])){
-    char **ADtok = tokenize(tokens[2],"()");
-    int imm;
-    int RS1 = findRegister(ADtok[0]);
+  char **ADtok = tokenize(tokens[2],"()");
+  int imm;
+  int RS1 = findRegister(ADtok[0]);
 
-    sscanf(ADtok[1],"%d",imm);
-    r[RD]=mem[r[RS1]+imm];
-    return 1;
+  sscanf(ADtok[1],"%d",imm);
+  r[RD]=mem[r[RS1]+imm];
+  return 1;
   }
   else{
     int RS1 = findRegister(tokens[2]);
@@ -296,14 +296,13 @@ int interpret(char *instr) {
       additoks[2]; //???? idk
       additoks[3];
     }
-    if(strcmp(*first,"LI")){ //seems broken probably memory allocation
-      int RD = findRegister(tokens[1]);
+    if(strcmp(*first,"LI")){
+      char **additoks = malloc(sizeof(tokens)*4);
+      additoks[1]=tokens[1];
+      additoks[2]=r[0];
+      additoks[3]=tokens[2];
+      return ADDI(additoks);
       
-
-      int imm;
-      sscanf(tokens[2],"%d",imm);
-      r[RD]= imm;
-      return 1;
     }
     if(strcmp(*first,"NED")){
       
