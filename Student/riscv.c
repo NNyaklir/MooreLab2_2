@@ -295,8 +295,14 @@ int interpret(char *instr) {
     if(strcmp(*first,"MV")){
       char **additoks = malloc(sizeof(tokens)*4);
       additoks[1]=tokens[1];
-      additoks[2]; //???? idk
+      additoks[2]; 
       additoks[3];
+
+      int RD= findRegister(tokens[1]);
+      int RS1 = findRegister(tokens[2]);
+
+      r[RD] = r[RS1];
+      return 1;
     }
     if(strcmp(*first,"LI")){
       char **additoks = malloc(sizeof(tokens)*4);
@@ -323,17 +329,17 @@ int interpret(char *instr) {
       return XORI(xoritoks);
     }
     //sixth set of instructions jump and link, and jump
-    if(strcmp(*first,"LB")){
+    if(strcmp(*first,"JAL")){
       
     }
-    if(strcmp(*first,"LB")){
+    if(strcmp(*first,"J")){
       
     }
     //seventh set of instructions,jump offset, and register
-    if(strcmp(*first,"LB")){
+    if(strcmp(*first,"JALR")){
       
     }
-    if(strcmp(*first,"LB")){
+    if(strcmp(*first,"JR")){
       
     }
 
