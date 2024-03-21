@@ -315,7 +315,12 @@ int interpret(char *instr) {
       
     }
     if(strcmp(*first,"NOT")){
-      
+      char **xoritoks = malloc(sizeof(tokens)*4);
+      xoritoks[1] = tokens[1];
+      xoritoks[2] = tokens[2];
+      xoritoks[3] = "-1";
+
+      return XORI(xoritoks);
     }
     //sixth set of instructions jump and link, and jump
     if(strcmp(*first,"LB")){
