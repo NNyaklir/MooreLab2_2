@@ -67,8 +67,27 @@ int ADDI(char **tokens){
     return 1;
 
   }
-  
 }
+
+int SUB(char **tokens){
+  int RD = findRegister(tokens[1]);
+  int RS1 = findRegister(tokens[2]);
+  int RS2 = findRegister(tokens[3]);
+
+  r[RD]=r[RS1]-r[RS2];
+  return 1;
+  }
+  
+int XORI(char **tokens){
+  int RD = findRegister(tokens[1]);
+  int RS1 = findRegister(tokens[2]);
+  int RS2 = findRegister(tokens[3]);
+
+  r[RD] = r[RS1]^r[RS2];
+  return 1;
+}
+  
+
 /**
  * Fill out this function and use it to read interpret user input to execute
  * RV32 instructions. You may expect that a single, properly formatted RISC-V
@@ -102,6 +121,7 @@ int interpret(char *instr) {
         return 1;
       }
     }
+
     if(strcmp(*first,"LW")){
       if (checkPar(tokens[2])){
         char **LWtok = tokenize(tokens[2],"()");
@@ -143,10 +163,10 @@ int interpret(char *instr) {
         sscanf(tokens[3],"%d",IMM);
 
         mem[r[RD]+IMM]=r[RS1];
-        return 1;
-      
-      
+        return 1; 
+      } 
     }
+
     if(strcmp(*first,"SW")){
       if (checkPar(tokens[2])){
         char **SWtok = tokenize(tokens[2],"()");
@@ -166,8 +186,9 @@ int interpret(char *instr) {
 
         mem[r[RD]+IMM]=r[RS1];
         return 1;
-      
     }
+    }
+
     //third set of insctructions add, add immediate, and sub
     if(strcmp(*first,"ADD")){
       int RD = findRegister(tokens[1]);
@@ -182,12 +203,7 @@ int interpret(char *instr) {
       return ADDI(tokens);
     }
     if(strcmp(*first,"SUB")){
-      int RD = findRegister(tokens[1]);
-      int RS1 = findRegister(tokens[2]);
-      int RS2 = findRegister(tokens[3]);
-
-      r[RD]=r[RS1]-r[RS2];
-      return 1;
+      return SUB(tokens);
       
     }
     // fourth set of instructions exclusive or, exclusive or immediate, shift left immediate, and shift right immediate
@@ -201,15 +217,7 @@ int interpret(char *instr) {
       
     }
     if(strcmp(*first,"XORI")){
-      int RD = findRegister(tokens[1]);
-      int RS1 = findRegister(tokens[2]);
-      
-      int imm;
-      sscanf(tokens[3],"%d",imm);
-
-      r[RD] = mem[r[RS1]+imm];
-      //r[RD]=r[RS1]+imm;
-      return 1;
+      return XORI(tokens);
       
     }
     if(strcmp(*first,"SLLI")){
