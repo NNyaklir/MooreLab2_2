@@ -139,8 +139,8 @@ int JAL( char **tokens){
   int imm;
   sscanf(tokens[2],"%d",&imm);
 
-  r[RD] = *((uint32_t *)(pc+imm));
-  pc += *((uint32_t *)imm);
+  r[RD] = (pc+imm);
+  pc += imm;
   return 1;
 }
 
@@ -150,7 +150,7 @@ int JALR( char **tokens){
   int imm;
   sscanf(tokens[3],"%d",&imm);
 
-  r[RD] =*((uint32_t *)(pc+imm));
+  r[RD] =pc+imm;
   pc = *((uint32_t *)(mem+r[RS1] + imm));
   return 1;
 }
@@ -269,7 +269,7 @@ int interpret(char *instr) {
     if(strcmp(first,"ADDI")){
       return ADDI(tokens);
     }
-    if(strcmp(*first,"SUB")){
+    if(strcmp(first,"SUB")){
       return SUB(tokens);
       
     }
@@ -314,9 +314,9 @@ int interpret(char *instr) {
     //fifth set of instructions  move immediate, load immediate, negate, ones compliment
     if(strcmp(first,"MV")){
       char **additoks = malloc(sizeof(tokens)*4);
-      additoks[1]=tokens[1];
-      additoks[2]; 
-      additoks[3];
+      //additoks[1]=tokens[1];
+      //additoks[2]; 
+      //additoks[3];
 
       int RD= findRegister(tokens[1]);
       int RS1 = findRegister(tokens[2]);
