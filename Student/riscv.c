@@ -110,7 +110,7 @@ int ADDI(char **tokens){
 
     int imm;
     sscanf(tokens[3],"%d",imm);
-    r[RD]=r[RS1]+imm;
+    r[RD]=mem[r[RS1]]+imm;
     return 1;
 
   }
@@ -141,6 +141,17 @@ int JAL( char **tokens){
 
   r[RD] = (pc+imm);
   pc += imm;
+  return 1;
+}
+
+int JALR( char **tokens){
+  int RD = findRegister(tokens[1]);
+  int RS1 = findRegister(tokens[2]);
+  int imm;
+  sscanf(tokens[3],"%d",imm);
+
+  r[RD] = (pc+imm);
+  pc = mem[r[RS1]] + imm;
   return 1;
 }
 
@@ -351,10 +362,16 @@ int interpret(char *instr) {
     }
     //seventh set of instructions,jump offset, and register
     if(strcmp(*first,"JALR")){
-      
+      JALR(tokens);
     }
     if(strcmp(*first,"JR")){
-      
+      char **jalrtoks = malloc(sizeof(tokens)*4);
+      jalrtoks[1]= "0";
+      jalrtoks[2]= tokens[1];
+      jalrtoks[3]= "0";
+
+      JALR(jalrtoks);
+      return 1;
     }
 
   return 1;
@@ -392,9 +409,9 @@ int main(int argc, char **argv) {
     get_line(buffer, i); 
     //check to see if there is something in the buffer, first character 
     //if there is nothing \0, break loop
-    //if (strcmp(buffer[0],"\0")){
-    //  break;
-    //}
+    if (strcmp(buffer[0],"\0")){
+      break;
+    }
 
     interpret(buffer);
     i++;
