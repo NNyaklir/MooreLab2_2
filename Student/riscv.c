@@ -87,7 +87,7 @@ int findRegister(char *section){
 //this is to check if an imm is by itself or from a register.
 int checkPar(char *parcheck){
   for (size_t i=0;i<str_len(parcheck)-1;i++){
-    if(strcmp(i,"(")){
+    if(strcmp(parcheck[i],"(")){
       return 1;
     }
   }
@@ -102,7 +102,7 @@ int ADDI(char **tokens){
   int RS1 = findRegister(ADtok[0]);
 
   sscanf(ADtok[1],"%d",&imm);
-  r[RD]=mem[r[RS1]+imm];
+  r[RD]=*((uint32_t *)(mem+r[RS1]+imm));
   return 1;
   }
   else{
@@ -110,7 +110,7 @@ int ADDI(char **tokens){
 
     int imm;
     sscanf(tokens[3],"%d",&imm);
-    r[RD]=mem+r[RS1]+imm;
+    r[RD]=*((uint32_t *)(mem+r[RS1]+imm));
     return 1;
 
   }
@@ -151,7 +151,7 @@ int JALR( char **tokens){
   sscanf(tokens[3],"%d",&imm);
 
   r[RD] = (pc+imm);
-  pc = mem[r[RS1]] + imm;
+  pc = *((uint32_t *)(mem+r[RS1] + imm));
   return 1;
 }
 
@@ -175,7 +175,7 @@ int interpret(char *instr) {
         sscanf(LBtok[1],"%d",&IMM);
         int RS1 = findRegister(LBtok[0]);
 
-        r[RD] = mem[r[RS1] + IMM];
+        r[RD] = *((uint32_t *)(mem+r[RS1] + IMM));
         return 1;
       }
       else{
@@ -184,7 +184,7 @@ int interpret(char *instr) {
         int IMM;
         sscanf(tokens[3],"%d",&IMM);
 
-        r[RD] = mem[r[RS1] + IMM];
+        r[RD] = *((uint32_t *)(mem+r[RS1] + IMM));
         return 1;
       }
     }
@@ -197,7 +197,7 @@ int interpret(char *instr) {
         sscanf(LWtok[0],"%d",&IMM);
         int RS1 = findRegister(LWtok[1]);
 
-        r[RD] = mem[r[RS1] + IMM];
+        r[RD] = *((uint32_t *)(mem+r[RS1] + IMM));
         return 1;
       }
       else{
@@ -206,7 +206,7 @@ int interpret(char *instr) {
         int IMM;
         sscanf(tokens[3],"%d",&IMM);
 
-        r[RD] = mem[r[RS1] + IMM];
+        r[RD] = *((uint32_t *)(mem+r[RS1] + IMM));
         return 1;
       }
     }
@@ -220,7 +220,7 @@ int interpret(char *instr) {
         int RS1 = findRegister(SBtok[1]);
 
         
-        mem[r[RD]+IMM]=r[RS1];
+        *((uint32_t *)(mem+r[RD] + IMM))=r[RS1];
         return 1;
       }
       else{
@@ -229,7 +229,7 @@ int interpret(char *instr) {
         int IMM;
         sscanf(tokens[3],"%d",&IMM);
 
-        mem[r[RD]+IMM]=r[RS1];
+        *((uint32_t *)(mem+r[RD] + IMM))=r[RS1];
         return 1; 
       } 
     }
@@ -242,7 +242,7 @@ int interpret(char *instr) {
         sscanf(SWtok[0],"%d",&IMM);
         int RS1 = findRegister(SWtok[1]);
 
-        mem[r[RD]+IMM]=r[RS1];
+        *((uint32_t *)(mem+r[RD] + IMM))=r[RS1];
         return 1;
       }
       else{
@@ -251,7 +251,7 @@ int interpret(char *instr) {
         int IMM;
         sscanf(tokens[3],"%d",&IMM);
 
-        mem[r[RD]+IMM]=r[RS1];
+        *((uint32_t *)(mem+r[RD] + IMM))=r[RS1];
         return 1;
     }
     }
@@ -294,7 +294,7 @@ int interpret(char *instr) {
       int imm;
       sscanf(tokens[3],"%d",&imm);
 
-      r[RD] = mem[r[RS1]<<imm];
+      r[RD] = mem[r[RS1]<<imm];//*((uint32_t *)((mem+r[RS1]) << imm))
       //r[RD] = r[RS1]<<imm;
       return 1;
       
