@@ -101,7 +101,7 @@ int ADDI(char **tokens){
   int imm;
   int RS1 = findRegister(ADtok[0]);
 
-  sscanf(ADtok[1],"%d",imm);
+  sscanf(ADtok[1],"%d",&imm);
   r[RD]=mem[r[RS1]+imm];
   return 1;
   }
@@ -109,7 +109,7 @@ int ADDI(char **tokens){
     int RS1 = findRegister(tokens[2]);
 
     int imm;
-    sscanf(tokens[3],"%d",imm);
+    sscanf(tokens[3],"%d",&imm);
     r[RD]=mem[r[RS1]]+imm;
     return 1;
 
@@ -148,7 +148,7 @@ int JALR( char **tokens){
   int RD = findRegister(tokens[1]);
   int RS1 = findRegister(tokens[2]);
   int imm;
-  sscanf(tokens[3],"%d",imm);
+  sscanf(tokens[3],"%d",&imm);
 
   r[RD] = (pc+imm);
   pc = mem[r[RS1]] + imm;
@@ -172,7 +172,7 @@ int interpret(char *instr) {
         char **LBtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
         int IMM; 
-        sscanf(LBtok[1],"%d",IMM);
+        sscanf(LBtok[1],"%d",&IMM);
         int RS1 = findRegister(LBtok[0]);
 
         r[RD] = mem[r[RS1] + IMM];
@@ -182,7 +182,7 @@ int interpret(char *instr) {
         int RD= findRegister(tokens[1]);
         int RS1= findRegister(tokens[2]);
         int IMM;
-        sscanf(tokens[3],"%d",IMM);
+        sscanf(tokens[3],"%d",&IMM);
 
         r[RD] = mem[r[RS1] + IMM];
         return 1;
@@ -194,7 +194,7 @@ int interpret(char *instr) {
         char **LWtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
         int IMM; 
-        sscanf(LWtok[0],"%d",IMM);
+        sscanf(LWtok[0],"%d",&IMM);
         int RS1 = findRegister(LWtok[1]);
 
         r[RD] = mem[r[RS1] + IMM];
@@ -204,7 +204,7 @@ int interpret(char *instr) {
         int RD= findRegister(tokens[1]);
         int RS1= findRegister(tokens[2]);
         int IMM;
-        sscanf(tokens[3],"%d",IMM);
+        sscanf(tokens[3],"%d",&IMM);
 
         r[RD] = mem[r[RS1] + IMM];
         return 1;
@@ -216,7 +216,7 @@ int interpret(char *instr) {
         char **SBtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
         int IMM; 
-        sscanf(SBtok[0],"%d",IMM);
+        sscanf(SBtok[0],"%d",&IMM);
         int RS1 = findRegister(SBtok[1]);
 
         
@@ -227,7 +227,7 @@ int interpret(char *instr) {
         int RD= findRegister(tokens[1]);
         int RS1= findRegister(tokens[2]);
         int IMM;
-        sscanf(tokens[3],"%d",IMM);
+        sscanf(tokens[3],"%d",&IMM);
 
         mem[r[RD]+IMM]=r[RS1];
         return 1; 
@@ -239,7 +239,7 @@ int interpret(char *instr) {
         char **SWtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
         int IMM; 
-        sscanf(SWtok[0],"%d",IMM);
+        sscanf(SWtok[0],"%d",&IMM);
         int RS1 = findRegister(SWtok[1]);
 
         mem[r[RD]+IMM]=r[RS1];
@@ -249,7 +249,7 @@ int interpret(char *instr) {
         int RD= findRegister(tokens[1]);
         int RS1= findRegister(tokens[2]);
         int IMM;
-        sscanf(tokens[3],"%d",IMM);
+        sscanf(tokens[3],"%d",&IMM);
 
         mem[r[RD]+IMM]=r[RS1];
         return 1;
@@ -292,7 +292,7 @@ int interpret(char *instr) {
       int RS1 = findRegister(tokens[2]);
       
       int imm;
-      sscanf(tokens[3],"%d",imm);
+      sscanf(tokens[3],"%d",&imm);
 
       r[RD] = mem[r[RS1]<<imm];
       //r[RD] = r[RS1]<<imm;
@@ -304,7 +304,7 @@ int interpret(char *instr) {
       int RS1 = findRegister(tokens[2]);
       
       int imm;
-      sscanf(tokens[3],"%d",imm);
+      sscanf(tokens[3],"%d",&imm);
 
       r[RD] = mem[r[RS1]>>imm];
       //r[RD] = r[RS1]>>imm;
