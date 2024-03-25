@@ -392,9 +392,9 @@ int main(int argc, char **argv) {
     get_line(buffer, i); 
     //check to see if there is something in the buffer, first character 
     //if there is nothing \0, break loop
-    if (strcmp(buffer[0],"\0")){
-      break;
-    }
+    //if (strcmp(buffer[0],"\0")){
+    //  break;
+    //}
 
     interpret(buffer);
     i++;
