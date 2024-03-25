@@ -324,7 +324,7 @@ int interpret(char *instr) {
     if(strcmp(*first,"NED")){
       char **subitoks = malloc(sizeof(tokens)*4);
       subitoks[1]= tokens[1];
-      subitoks[2]= r[0];
+      subitoks[2]= "0";
       subitoks[3]= tokens[2];
       return SUB(subitoks);
       
