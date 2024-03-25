@@ -137,10 +137,10 @@ int XORI(char **tokens){
 int JAL( char **tokens){
   int RD = findRegister(tokens[1]);
   int imm;
-  sscanf(tokens[2],"%d",imm);
+  sscanf(tokens[2],"%d",&imm);
 
-  r[RD] = (pc+imm);
-  pc += imm;
+  r[RD] = *((uint32_t *)(pc+imm));
+  pc += *((uint32_t *)imm);
   return 1;
 }
 
@@ -150,7 +150,7 @@ int JALR( char **tokens){
   int imm;
   sscanf(tokens[3],"%d",&imm);
 
-  r[RD] = (pc+imm);
+  r[RD] =*((uint32_t *)(pc+imm));
   pc = *((uint32_t *)(mem+r[RS1] + imm));
   return 1;
 }
@@ -167,7 +167,7 @@ int interpret(char *instr) {
 
 
     //first set of instructions load byte and load word
-    if(strcmp(*first,"LB")){
+    if(strcmp(first,"LB")){
       if (checkPar(tokens[2])){
         char **LBtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
@@ -189,7 +189,7 @@ int interpret(char *instr) {
       }
     }
 
-    if(strcmp(*first,"LW")){
+    if(strcmp(first,"LW")){
       if (checkPar(tokens[2])){
         char **LWtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
@@ -211,7 +211,7 @@ int interpret(char *instr) {
       }
     }
     //second set of instructions store byte and store word
-    if(strcmp(*first,"SB")){
+    if(strcmp(first,"SB")){
       if (checkPar(tokens[2])){
         char **SBtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
@@ -234,7 +234,7 @@ int interpret(char *instr) {
       } 
     }
 
-    if(strcmp(*first,"SW")){
+    if(strcmp(first,"SW")){
       if (checkPar(tokens[2])){
         char **SWtok = tokenize(tokens[2],"()");
         int RD = findRegister(tokens[1]);
@@ -257,7 +257,7 @@ int interpret(char *instr) {
     }
 
     //third set of insctructions add, add immediate, and sub
-    if(strcmp(*first,"ADD")){
+    if(strcmp(first,"ADD")){
       int RD = findRegister(tokens[1]);
       int RS1 = findRegister(tokens[2]);
       int RS2 = findRegister(tokens[3]);
@@ -266,7 +266,7 @@ int interpret(char *instr) {
       return 1;
       
     }
-    if(strcmp(*first,"ADDI")){
+    if(strcmp(first,"ADDI")){
       return ADDI(tokens);
     }
     if(strcmp(*first,"SUB")){
@@ -274,7 +274,7 @@ int interpret(char *instr) {
       
     }
     // fourth set of instructions exclusive or, exclusive or immediate, shift left immediate, and shift right immediate
-    if(strcmp(*first,"XOR")){
+    if(strcmp(first,"XOR")){
       int RD = findRegister(tokens[1]);
       int RS1 = findRegister(tokens[2]);
       int RS2 = findRegister(tokens[3]);
@@ -283,11 +283,11 @@ int interpret(char *instr) {
       return 1;
       
     }
-    if(strcmp(*first,"XORI")){
+    if(strcmp(first,"XORI")){
       return XORI(tokens);
       
     }
-    if(strcmp(*first,"SLLI")){
+    if(strcmp(first,"SLLI")){
       int RD = findRegister(tokens[1]);
       int RS1 = findRegister(tokens[2]);
       
@@ -299,7 +299,7 @@ int interpret(char *instr) {
       return 1;
       
     }
-    if(strcmp(*first,"SRLI")){
+    if(strcmp(first,"SRLI")){
       int RD = findRegister(tokens[1]);
       int RS1 = findRegister(tokens[2]);
       
@@ -312,7 +312,7 @@ int interpret(char *instr) {
       
     }
     //fifth set of instructions  move immediate, load immediate, negate, ones compliment
-    if(strcmp(*first,"MV")){
+    if(strcmp(first,"MV")){
       char **additoks = malloc(sizeof(tokens)*4);
       additoks[1]=tokens[1];
       additoks[2]; 
@@ -324,7 +324,7 @@ int interpret(char *instr) {
       r[RD] = r[RS1];
       return 1;
     }
-    if(strcmp(*first,"LI")){
+    if(strcmp(first,"LI")){
       char **additoks = malloc(sizeof(tokens)*4);
       additoks[1]=tokens[1];
       additoks[2]= "0";
@@ -332,7 +332,7 @@ int interpret(char *instr) {
       return ADDI(additoks);
       
     }
-    if(strcmp(*first,"NED")){
+    if(strcmp(first,"NED")){
       char **subitoks = malloc(sizeof(tokens)*4);
       subitoks[1]= tokens[1];
       subitoks[2]= "0";
@@ -340,7 +340,7 @@ int interpret(char *instr) {
       return SUB(subitoks);
       
     }
-    if(strcmp(*first,"NOT")){
+    if(strcmp(first,"NOT")){
       char **xoritoks = malloc(sizeof(tokens)*4);
       xoritoks[1] = tokens[1];
       xoritoks[2] = tokens[2];
@@ -349,11 +349,11 @@ int interpret(char *instr) {
       return XORI(xoritoks);
     }
     //sixth set of instructions jump and link, and jump
-    if(strcmp(*first,"JAL")){
+    if(strcmp(first,"JAL")){
       JAL(tokens);
 
     }
-    if(strcmp(*first,"J")){
+    if(strcmp(first,"J")){
       char **jaltoks = malloc(sizeof(tokens)*4);
       jaltoks[1]= "0";
       jaltoks[2]= tokens[1];
@@ -361,10 +361,10 @@ int interpret(char *instr) {
       JAL(jaltoks);
     }
     //seventh set of instructions,jump offset, and register
-    if(strcmp(*first,"JALR")){
+    if(strcmp(first,"JALR")){
       JALR(tokens);
     }
-    if(strcmp(*first,"JR")){
+    if(strcmp(first,"JR")){
       char **jalrtoks = malloc(sizeof(tokens)*4);
       jalrtoks[1]= "0";
       jalrtoks[2]= tokens[1];
