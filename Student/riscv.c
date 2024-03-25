@@ -313,10 +313,10 @@ int interpret(char *instr) {
     }
     //fifth set of instructions  move immediate, load immediate, negate, ones compliment
     if(strcmp(first,"MV")){
-      //char **additoks = malloc(sizeof(tokens)*4);
-      //additoks[1]=tokens[1];
-      //additoks[2]; 
-      //additoks[3];
+      char **additoks = malloc(sizeof(tokens)*4);
+      additoks[1]=tokens[1];
+      additoks[2]; 
+      additoks[3];
 
       int RD= findRegister(tokens[1]);
       int RS1 = findRegister(tokens[2]);
