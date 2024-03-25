@@ -110,7 +110,7 @@ int ADDI(char **tokens){
 
     int imm;
     sscanf(tokens[3],"%d",imm);
-    r[RD]=mem[r[RS1]+imm];
+    r[RD]=r[RS1]+imm;
     return 1;
 
   }
