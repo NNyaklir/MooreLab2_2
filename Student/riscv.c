@@ -135,7 +135,7 @@ int XORI(char **tokens){
 }
   
 int JAL( char **tokens){
-  int RD = tokens[1];
+  int RD = findRegister(tokens[1]);
   int imm;
   sscanf(tokens[2],"%d",imm);
 
