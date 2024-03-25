@@ -86,7 +86,7 @@ int findRegister(char *section){
 
 //this is to check if an imm is by itself or from a register.
 int checkPar(char *parcheck){
-  for (int i=0;i<str_len(parcheck)-1;i++){
+  for (size_t i=0;i<str_len(parcheck)-1;i++){
     if(strcmp(i,"(")){
       return 1;
     }
@@ -110,7 +110,7 @@ int ADDI(char **tokens){
 
     int imm;
     sscanf(tokens[3],"%d",&imm);
-    r[RD]=mem[r[RS1]]+imm;
+    r[RD]=mem+r[RS1]+imm;
     return 1;
 
   }
