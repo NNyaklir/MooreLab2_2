@@ -134,6 +134,15 @@ int XORI(char **tokens){
   return 1;
 }
   
+int JAL( char **tokens){
+  int RD = tokens[1];
+  int imm;
+  sscanf(tokens[2],"%d",imm);
+
+  r[RD] = (pc+imm);
+  pc += imm;
+  return 1;
+}
 
 /**
  * Fill out this function and use it to read interpret user input to execute
@@ -330,10 +339,15 @@ int interpret(char *instr) {
     }
     //sixth set of instructions jump and link, and jump
     if(strcmp(*first,"JAL")){
-      
+      JAL(tokens);
+
     }
     if(strcmp(*first,"J")){
-      
+      char **jaltoks = malloc(sizeof(tokens)*4);
+      jaltoks[1]= "0";
+      jaltoks[2]= tokens[1];
+
+      JAL(jaltoks);
     }
     //seventh set of instructions,jump offset, and register
     if(strcmp(*first,"JALR")){
